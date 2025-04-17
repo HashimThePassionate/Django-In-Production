@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-# Create your views here.
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
-def hello_world(request,*atrgs,**kwargs):
-    return HttpResponse("Hello World!")
+@api_view(['GET'])
+def hello_world(request, *atrgs, **kwargs):
+    return Response(data={'message': 'Hello, World!'})
