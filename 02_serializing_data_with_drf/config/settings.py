@@ -41,14 +41,19 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 
+CUSTOM_APPS = [
+    'blog',
+    'author',
+]
+
 # CUSTOM_APPS = [
 #     'demo_app.apps.DemoAppConfig',
 # ]
 
-INSTALLED_APPS = DJANGO_APPS  + THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
 REST_FRAMEWORK = {
- 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning'
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning'
 }
 
 
