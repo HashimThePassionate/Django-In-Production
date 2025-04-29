@@ -14,7 +14,7 @@ class Blog(BaseTimeStampModel):
     content = models.TextField()
     author = models.ForeignKey('author.Author', related_name='author_blogs', on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tags', related_name='blog_tags')
-    cover_image = models.OneToOneField('CoverImage', related_name='blog_cover_image', on_delete=models.PROTECT)
+    blog_cover_image = models.OneToOneField('CoverImage', related_name='blog', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.title
