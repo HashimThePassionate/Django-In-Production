@@ -33,12 +33,15 @@ class BlogCustom3Serializer(serializers.ModelSerializer):
         model = models.Blog
         fields = '__all__'
 
+
 class BlogSerializer4(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='author.name')  # Author ke name field tak pohanch
+    # Author ke name field tak pohanch
+    author_name = serializers.CharField(source='author.name')
 
     class Meta:
         model = models.Blog
         fields = ['id', 'title', 'author_name']
+
 
 class BlogLimitedFieldsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -118,6 +121,39 @@ class BlogCustom3Serializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# Serializer Method
+
+class BlogCustom5Serializer(serializers.ModelSerializer):
+    word_count = serializers.SerializerMethodField()
+
+    def get_word_count(self, obj):
+        return len(obj.content.split())  # Content ke words count karta hai
+
+    class Meta:
+        model = models.Blog
+        fields = ['id', 'title', 'content', 'word_count']
 
 
+# Serializer 2: Custom method name
+class BlogCustom6CustomSerializer(serializers.ModelSerializer):
+    word_count = serializers.SerializerMethodField(
+        method_name='use_custom_word_count')
 
+    def use_custom_word_count(self, obj):
+        return len(obj.content.split())  # Same logic, different method name
+
+    class Meta:
+        model = models.Blog
+        fields = ['id', 'title', 'content', 'word_count']
+# Serializer 3: Related field example
+
+
+class BlogRelatedSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+
+    def get_author_name(self, obj):
+        return obj.author.name.upper()  # Author ka naam uppercase mein
+
+    class Meta:
+        model = models.Blog
+        fields = ['id', 'title', 'author_name']
