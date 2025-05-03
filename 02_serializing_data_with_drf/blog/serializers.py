@@ -33,6 +33,12 @@ class BlogCustom3Serializer(serializers.ModelSerializer):
         model = models.Blog
         fields = '__all__'
 
+class BlogSerializer4(serializers.ModelSerializer):
+    author_name = serializers.CharField(source='author.name')  # Author ke name field tak pohanch
+
+    class Meta:
+        model = models.Blog
+        fields = ['id', 'title', 'author_name']
 
 class BlogLimitedFieldsSerializer(serializers.ModelSerializer):
     class Meta:

@@ -7,7 +7,7 @@ class Author(models.Model):
     bio = models.TextField()
 
     def fetch_short_bio(self):
-         return self.bio[:100]
+        return self.bio[:10]
 
     def __str__(self):
         return self.name
