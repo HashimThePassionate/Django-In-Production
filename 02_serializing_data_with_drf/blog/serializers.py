@@ -157,3 +157,50 @@ class BlogRelatedSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Blog
         fields = ['id', 'title', 'author_name']
+
+
+# Field level validation
+
+class BlogCustom7Serializer(serializers.ModelSerializer):
+    def validate_title(self, value):
+        print('validate_title method')
+        if '_' in value:
+            raise serializers.ValidationError('illegal char')
+        return value
+
+    class Meta:
+        model = models.Blog
+        fields = '__all__'
+
+# Custom Field-Level Validator
+def demo_func_validator(attr):
+    print('func val')
+    if '_' in attr:
+        raise serializers.ValidationError('invalid char')
+    return attr
+
+class BlogCustom8Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Blog
+        fields = '__all__'
+        extra_kwargs = {
+            'title': {
+                'validators': [demo_func_validator]
+            },
+            'content': {
+                'validators': [demo_func_validator]
+            }
+        }
+
+
+#  Object Level validation
+
+class BlogCustom9Serializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        if attrs['title'] == attrs['content']:
+            raise serializers.ValidationError('Title and content cannot have same value')
+        return attrs
+
+    class Meta:
+        model = models.Blog
+        fields = '__all__'
