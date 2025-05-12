@@ -36,7 +36,9 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'admin_honeypot',
 ]
+ADMIN_HONEYPOT_EMAIL_ADMINS = False
 
 THIRD_PARTY_APPS = [
     'rest_framework',
