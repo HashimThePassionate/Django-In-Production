@@ -33,6 +33,7 @@ class BlogAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
     filter_horizontal = ['tags']
     filter_vertical = ['tags']
+    raw_id_fields = ['author']
 
     def author_full_name(self, obj):
         return f'{obj.author.user.first_name} {obj.author.user.last_name}'
