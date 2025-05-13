@@ -3,7 +3,11 @@ from blog import models
 from django.contrib.admin.models import LogEntry
 from django.core import paginator
 from django.utils.functional import cached_property
-
+from django.contrib import messages
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.urls import path
+from django.utils.html import format_html
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
@@ -24,6 +28,7 @@ class CustomPaginator(paginator.Paginator):
 
 
 class BlogAdmin(admin.ModelAdmin):
+    actions = ('print_blog_titles',)
     paginator = CustomPaginator
     list_per_page = 3
     search_fields = ['title']
@@ -34,6 +39,15 @@ class BlogAdmin(admin.ModelAdmin):
     filter_horizontal = ['tags']
     filter_vertical = ['tags']
     raw_id_fields = ['author']
+
+    @admin.action(description='Print blog titles')
+    def print_blog_titles(self, request, queryset):
+        # Saare titles ek list mein collect karo
+        titles = [blog.title for blog in queryset]
+        # Titles ko string mein convert karo
+        message = "Selected Blog Titles: " + ", ".join(titles)
+        # Admin panel mein message dikhao
+        self.message_user(request, message, level=messages.SUCCESS)
 
     def author_full_name(self, obj):
         return f'{obj.author.user.first_name} {obj.author.user.last_name}'
