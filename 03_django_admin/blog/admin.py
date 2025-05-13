@@ -1,6 +1,8 @@
 from django.contrib import admin
 from blog import models
 from django.contrib.admin.models import LogEntry
+from django.core import paginator
+from django.utils.functional import cached_property
 
 
 @admin.register(LogEntry)
@@ -15,7 +17,15 @@ class LogEntryAdmin(admin.ModelAdmin):
         return False
 
 
+class CustomPaginator(paginator.Paginator):
+    @cached_property
+    def count(self):
+        return 9999999
+
+
 class BlogAdmin(admin.ModelAdmin):
+    paginator = CustomPaginator
+    list_per_page = 3
     search_fields = ['title']
     show_full_result_count = True
     list_filter = ['title']
