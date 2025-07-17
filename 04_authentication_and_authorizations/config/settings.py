@@ -36,9 +36,6 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'admin_honeypot',
-    'django_otp', 
-    'django_otp.plugins.otp_totp',
 ]
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
 
@@ -49,6 +46,7 @@ THIRD_PARTY_APPS = [
 CUSTOM_APPS = [
     'blog',
     'author',
+    'custom_user',
 ]
 
 # CUSTOM_APPS = [
@@ -67,6 +65,7 @@ INTERNAL_IPS = [
     # ...
 ]
 
+AUTH_USER_MODEL = "custom_user.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,7 +73,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
